@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from pprint import pprint
 import pandas as pd
 from tabulate import tabulate
-from waitress import serve
+from waitress import serve 
 
 app = Flask(__name__)
 
@@ -135073,4 +135073,4 @@ def find_goat_web():
     return render_template('calculator.html')
 
 if __name__ == "__main__":
-    serve(app, host='127.0.0.1', threaded=True, debug=True)
+    serve(app, host="0.0.0.0", port=8000)
