@@ -1029,6 +1029,27 @@
         </form>
         <br>
         <br>
+
+        <script>
+            document.getElementById("myForm").addEventListener("submit", function(event) {
+              // Loop through form elements
+              var formElements = this.elements;
+              for (var i = 0; i < formElements.length; i++) {
+                var element = formElements[i];
+                // Check if the element is a required input or textarea
+                if (element.tagName === "INPUT" && element.hasAttribute("required") && element.value === "") {
+                  // Prevent form submission
+                  event.preventDefault();
+                  // Scroll to the first unanswered field
+                  element.scrollIntoView({ behavior: "smooth", block: "start" });
+                  // Optionally, you can add visual cues to highlight the unanswered field
+                  element.style.border = "2px solid red";
+                  return; // Stop checking further fields
+                }
+              }
+            });
+          </script>
+          
 </body>
 
 </html>
