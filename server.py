@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Your existing code (excluding imports) goes here
 # ...
 
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def find_goat_web():
     if request.method == 'POST':
         # Get user input from the form
