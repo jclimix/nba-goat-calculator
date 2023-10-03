@@ -208,7 +208,7 @@
         h4 {
             color: #007bff;
             margin-top: 20px;
-            font-size: 22px;
+            font-size: 24px;
             line-height: 0.3;
         }
 
@@ -219,6 +219,38 @@
             line-height: 0.1;
             letter-spacing: 0.4px;
             font-family: 'Reem Kufi', cursive;
+        }
+        h6 {
+            color: #333;
+            margin-top: 9px;
+            margin-bottom: 28px;
+            font-size: 26px;
+            line-height: 0;
+            letter-spacing: 0.4px;
+            font-family: 'Reem Kufi', cursive;
+        }
+        h7 {
+            color: #333;
+            margin-top: 9px;
+            margin-bottom: 28px;
+            margin-right: 28px;
+            font-size: 26px;
+            line-height: 0;
+            letter-spacing: 0.4px;
+            font-family: 'Reem Kufi', cursive;
+        }
+        h8 {
+            color: #ffd23e;
+            margin-top: 20px;
+            font-size: 52px;
+            font-family: 'Lalezar', cursive;
+            line-height: 0.2;
+            text-align: center;
+            letter-spacing: 3px;
+            text-shadow: -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
         }
         
         /* Add these styles to your existing CSS styles */
@@ -301,6 +333,10 @@
             color: red;
             /* Change the color to your desired color */
         }
+        .highlight-blue {
+            color: #007bff;
+            /* Change the color to your desired color */
+        }
 
         .center-align-text {
             text-align: center;
@@ -318,13 +354,71 @@
             margin-top: 20px;
             text-align: left;
         }
+        .toggle-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .toggle-label {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        /* Hide the default checkbox */
+        .toggle-label input {
+            display: none;
+        }
+        
+        /* Style the toggle switch background */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            transition: background-color 0.4s;
+        }
+        
+        /* Style the slider when the checkbox is checked (on) */
+        .toggle-label input:checked + .slider {
+            background-color: #2196F3;
+        }
+        
+        /* Style the slider's thumb (the round part) */
+        .slider::before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.4s;
+        }
+        
+        /* Move the slider's thumb when the checkbox is checked (on) */
+        .toggle-label input:checked + .slider::before {
+            transform: translateX(26px);
+        }
+
     </style>
 </head>
 
 <body>
     <h1>NBA<br></h1>
     <h2>"Greatest of All-Time"<br></h2>
-    <h1>ScoreCard<br></h1>
+    <h1>ScoreCard</h1>
+    <div class="center-align-text">
+      <h8>Version 2</h8>
+    </div>
+    <br>
+    <br>
 
     <div class="center-container">
         <a href="https://docs.google.com/document/d/1aXlCrCJ1a_Cwnl_VDz1n5QhZcjoKdzb3cxIZFvCahfk/edit?usp=sharing" target="_blank">
@@ -339,7 +433,20 @@
             <div class="center-align-text">
                 <span class="highlight">Directions:</span> Use this form to rate the following metrics in order to aggregate the career statistics of every NBA player in history and produce a personalized "G.O.A.T." based on YOUR criteria!
             </div>
-
+            <br>
+            <br>
+            
+            <h6>Enable ERA-MODE?</h6>
+            <p><span class="highlight-blue">ERA-Mode: </span>Selecting YES will change the way players' GOAT Scores are tallied. Their regular season and playoff stats will factor in the performance of their peers in the respective eras they played in throughout their career.</p>
+            <br><br>
+            <label class="radio-label">
+                <input type="radio" id="Y" name="inp_era_mode" value="Y" />YES
+            </label>
+            <br>
+            <label class="radio-label">
+                <input type="radio" id="N" name="inp_era_mode" value="N" required/>NO
+            </label>
+            
             <h3>Player Statistics (R-Score & P-Score)</h3>
             <div class="left-align-text">
                 On a scale of 1 to 10, rate the importance/impact of each individual NBA statistic for a given NBA player.
@@ -415,7 +522,7 @@
             </div>
             <br>
 
-            <h5>Rebounds (Per Game):</h5>
+            <h5>Total Rebounds (Per Game):</h5>
             <div class="radioGroupBelow">
                 <label for="inp_rpg1" class="radio-label">1
             <input type="radio" name="inp_rpg" id="inp_rpg1" value="1" required>
@@ -446,6 +553,76 @@
           </label>
                 <label for="inp_rpg10" class="radio-label">10
             <input type="radio" name="inp_rpg" id="inp_rpg10" value="10">
+          </label>
+            </div>
+            <br>
+
+            <h5>Offensive Rebounds (Per Game):</h5>
+            <div class="radioGroupBelow">
+                <label for="inp_orpg1" class="radio-label">1
+            <input type="radio" name="inp_orpg" id="inp_orpg1" value="1" required>
+          </label>
+                <label for="inp_orpg2" class="radio-label">2
+            <input type="radio" name="inp_orpg" id="inp_orpg2" value="2">
+          </label>
+                <label for="inp_orpg3" class="radio-label">3
+            <input type="radio" name="inp_orpg" id="inp_orpg3" value="3">
+          </label>
+                <label for="inp_orpg4" class="radio-label">4
+            <input type="radio" name="inp_orpg" id="inp_orpg4" value="4">
+          </label>
+                <label for="inp_orpg5" class="radio-label">5
+            <input type="radio" name="inp_orpg" id="inp_orpg5" value="5">
+          </label>
+                <label for="inp_orpg6" class="radio-label">6
+            <input type="radio" name="inp_orpg" id="inp_orpg6" value="6">
+          </label>
+                <label for="inp_orpg7" class="radio-label">7
+            <input type="radio" name="inp_orpg" id="inp_orpg7" value="7">
+          </label>
+                <label for="inp_orpg8" class="radio-label">8
+            <input type="radio" name="inp_orpg" id="inp_orpg8" value="8">
+          </label>
+                <label for="inp_orpg9" class="radio-label">9
+            <input type="radio" name="inp_orpg" id="inp_orpg9" value="9">
+          </label>
+                <label for="inp_orpg10" class="radio-label">10
+            <input type="radio" name="inp_orpg" id="inp_orpg10" value="10">
+          </label>
+            </div>
+            <br>
+
+            <h5>Defensive Rebounds (Per Game):</h5>
+            <div class="radioGroupBelow">
+                <label for="inp_drpg1" class="radio-label">1
+            <input type="radio" name="inp_drpg" id="inp_drpg1" value="1" required>
+          </label>
+                <label for="inp_drpg2" class="radio-label">2
+            <input type="radio" name="inp_drpg" id="inp_drpg2" value="2">
+          </label>
+                <label for="inp_drpg3" class="radio-label">3
+            <input type="radio" name="inp_drpg" id="inp_drpg3" value="3">
+          </label>
+                <label for="inp_drpg4" class="radio-label">4
+            <input type="radio" name="inp_drpg" id="inp_drpg4" value="4">
+          </label>
+                <label for="inp_drpg5" class="radio-label">5
+            <input type="radio" name="inp_drpg" id="inp_drpg5" value="5">
+          </label>
+                <label for="inp_drpg6" class="radio-label">6
+            <input type="radio" name="inp_drpg" id="inp_drpg6" value="6">
+          </label>
+                <label for="inp_drpg7" class="radio-label">7
+            <input type="radio" name="inp_drpg" id="inp_drpg7" value="7">
+          </label>
+                <label for="inp_drpg8" class="radio-label">8
+            <input type="radio" name="inp_drpg" id="inp_drpg8" value="8">
+          </label>
+                <label for="inp_drpg9" class="radio-label">9
+            <input type="radio" name="inp_drpg" id="inp_drpg9" value="9">
+          </label>
+                <label for="inp_drpg10" class="radio-label">10
+            <input type="radio" name="inp_drpg" id="inp_drpg10" value="10">
           </label>
             </div>
             <br>
@@ -658,10 +835,128 @@
             <input type="radio" name="inp_ts" id="inp_ts10" value="10">
           </label>
             </div>
-            <br><br>
+            <br>
 
+            <h5>Regular Season Win-Loss %:</h5>
+            <div class="radioGroupBelow">
+                <label for="inp_reg_wl1" class="radio-label">1
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl1" value="1" required>
+          </label>
+                <label for="inp_reg_wl2" class="radio-label">2
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl2" value="2">
+          </label>
+                <label for="inp_reg_wl3" class="radio-label">3
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl3" value="3">
+          </label>
+                <label for="inp_reg_wl4" class="radio-label">4
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl4" value="4">
+          </label>
+                <label for="inp_reg_wl5" class="radio-label">5
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl5" value="5">
+          </label>
+                <label for="inp_reg_wl6" class="radio-label">6
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl6" value="6">
+          </label>
+                <label for="inp_reg_wl7" class="radio-label">7
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl7" value="7">
+          </label>
+                <label for="inp_reg_wl8" class="radio-label">8
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl8" value="8">
+          </label>
+                <label for="inp_reg_wl9" class="radio-label">9
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl9" value="9">
+          </label>
+                <label for="inp_reg_wl10" class="radio-label">10
+            <input type="radio" name="inp_reg_wl" id="inp_reg_wl10" value="10">
+          </label>
+            </div>
+            <br>
+
+            <h5>Playoffs Win-Loss %:</h5>
+            <div class="radioGroupBelow">
+                <label for="inp_ply_wl1" class="radio-label">1
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl1" value="1" required>
+          </label>
+                <label for="inp_ply_wl2" class="radio-label">2
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl2" value="2">
+          </label>
+                <label for="inp_ply_wl3" class="radio-label">3
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl3" value="3">
+          </label>
+                <label for="inp_ply_wl4" class="radio-label">4
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl4" value="4">
+          </label>
+                <label for="inp_ply_wl5" class="radio-label">5
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl5" value="5">
+          </label>
+                <label for="inp_ply_wl6" class="radio-label">6
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl6" value="6">
+          </label>
+                <label for="inp_ply_wl7" class="radio-label">7
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl7" value="7">
+          </label>
+                <label for="inp_ply_wl8" class="radio-label">8
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl8" value="8">
+          </label>
+                <label for="inp_ply_wl9" class="radio-label">9
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl9" value="9">
+          </label>
+                <label for="inp_ply_wl10" class="radio-label">10
+            <input type="radio" name="inp_ply_wl" id="inp_ply_wl10" value="10">
+          </label>
+            </div>
+            <br><br>
+            
+            <h4>Apply Offensive-BOOST?</h4>
+            <p><span class="highlight">Meaning: </span>Selecting a boost will apply a multiplier to the OFFENSIVE statistics of all NBA players. This allows fans to apply a sizable BOOST to OFFENSIVE performance.</p>
+            <br><br>
+            <label class="radio-label">
+                <input type="radio" id="1" name="inp_off_bst" value="1" required/>
+                NO BOOST
+            </label>
+            <br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.1" name="inp_off_bst" value="1.1" />
+                MIN (10% BOOST)
+            </label><br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.25" name="inp_off_bst" value="1.25" />
+                MID (25% BOOST)
+            </label><br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.5" name="inp_off_bst" value="1.5" />
+                MAX (50% BOOST)
+            </label><br>
+            
+            <h4>Apply Defensive-BOOST?</h4>
+            <p><span class="highlight">Meaning: </span>Selecting a boost will apply a multiplier to the DEFENSIVE statistics <i>AND</i> accolades of all NBA players. This allows fans to apply a sizable BOOST to DEFENSIVE performance.</p>
+            <br><br>
+            <label class="radio-label">
+                <input type="radio" id="1" name="inp_def_bst" value="1" required/>
+                NO BOOST
+            </label>
+            <br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.1" name="inp_def_bst" value="1.1" />
+                MIN (10% BOOST)
+            </label><br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.25" name="inp_def_bst" value="1.25" />
+                MID (25% BOOST)
+            </label><br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.5" name="inp_def_bst" value="1.5" />
+                MAX (50% BOOST)
+            </label><br>
+            
             <h4>Apply Playoffs-BOOST?</h4>
-            <p><span class="highlight">Meaning: </span>Selecting a boost will apply a multiplier to the Playoffs statistics of all NBA players. This allows fans to apply a slight BOOST to postseason performance, giving players with higher postseason statistics a higher overall G-Score.</p>
+            <p><span class="highlight">Meaning: </span>Selecting a boost will apply a multiplier to the Playoffs statistics of all NBA players. This allows fans to apply a slight BOOST to postseason performance, giving players with higher postseason statistics a higher overall GOAT-Score.</p>
             <br><br>
             <label class="radio-label">
                 <input type="radio" id="1" name="inp_plyf_bst" value="1" required/>
@@ -689,8 +984,32 @@
                 On a scale of 1 to 10, rate the importance/value of each of the following accomplishments for a given NBA player.
             </div>
             <br>
+            
+            <h4>Apply Kudos-BOOST?</h4>
+            <p><span class="highlight">Meaning: </span>Selecting a boost will apply a multiplier to the awards and accolades received by all NBA players. This allows fans to place greater emphasis on players that are more accomplished/decorated.</p>
+            <br><br>
+            <label class="radio-label">
+                <input type="radio" id="1" name="inp_k_bst" value="1" required/>
+                NO BOOST
+            </label>
+            <br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.1" name="inp_k_bst" value="1.1" />
+                SMALL (10% BOOST)
+            </label><br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.25" name="inp_k_bst" value="1.2" />
+                MEDIUM (20% BOOST)
+            </label><br>
+
+            <label class="radio-label">
+                <input type="radio" id="1.5" name="inp_k_bst" value="1.3" />
+                LARGE (30% BOOST)
+            </label><br>
             <h4>Apply Champion-BOOST?</h4>
-            <p><span class="highlight">Meaning: </span>Selecting YES will apply a 4x multiplier to the number of Championships and Finals MVPs for all NBA players. This allows fans to apply a significant BOOST to postseason success, giving players with more Championships and/or Finals MVPs a higher overall G-Score.</p>
+            <p><span class="highlight">Meaning: </span>Selecting YES will apply a 4x multiplier to the number of Championships and Finals MVPs for all NBA players. This allows fans to apply a significant BOOST to postseason success, giving players with more Championships and/or Finals MVPs a higher overall GOAT-Score.</p>
             <br><br>
             <label class="radio-label">
                 <input type="radio" id="Y" name="inp_chp_bst" value="Y" />YES
@@ -842,6 +1161,181 @@
             </div><br>
 
             <h5>
+              <p style="font-size:25px">&#x1f4f8;</p>All-Star MVPs:</h5>
+          <div class="radioGroupBelow">
+              <label for="inp_allstarmvp1" class="radio-label">1
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp1" value="1" required>
+        </label>
+              <label for="inp_allstarmvp2" class="radio-label">2
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp2" value="2">
+        </label>
+              <label for="inp_allstarmvp3" class="radio-label">3
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp3" value="3">
+        </label>
+              <label for="inp_allstarmvp4" class="radio-label">4
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp4" value="4">
+        </label>
+              <label for="inp_allstarmvp5" class="radio-label">5
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp5" value="5">
+        </label>
+              <label for="inp_allstarmvp6" class="radio-label">6
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp6" value="6">
+        </label>
+              <label for="inp_allstarmvp7" class="radio-label">7
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp7" value="7">
+        </label>
+              <label for="inp_allstarmvp8" class="radio-label">8
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp8" value="8">
+        </label>
+              <label for="inp_allstarmvp9" class="radio-label">9
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp9" value="9">
+        </label>
+              <label for="inp_allstarmvp10" class="radio-label">10
+          <input type="radio" name="inp_allstarmvp" id="inp_allstarmvp10" value="10">
+        </label>
+          </div><br>
+
+          <h5>
+            <p style="font-size:25px">&#128737;</p>Defensive Player of the Year (DPOY):</h5>
+        <div class="radioGroupBelow">
+            <label for="inp_dpoy1" class="radio-label">1
+        <input type="radio" name="inp_dpoy" id="inp_dpoy1" value="1" required>
+      </label>
+            <label for="inp_dpoy2" class="radio-label">2
+        <input type="radio" name="inp_dpoy" id="inp_dpoy2" value="2">
+      </label>
+            <label for="inp_dpoy3" class="radio-label">3
+        <input type="radio" name="inp_dpoy" id="inp_dpoy3" value="3">
+      </label>
+            <label for="inp_dpoy4" class="radio-label">4
+        <input type="radio" name="inp_dpoy" id="inp_dpoy4" value="4">
+      </label>
+            <label for="inp_dpoy5" class="radio-label">5
+        <input type="radio" name="inp_dpoy" id="inp_dpoy5" value="5">
+      </label>
+            <label for="inp_dpoy6" class="radio-label">6
+        <input type="radio" name="inp_dpoy" id="inp_dpoy6" value="6">
+      </label>
+            <label for="inp_dpoy7" class="radio-label">7
+        <input type="radio" name="inp_dpoy" id="inp_dpoy7" value="7">
+      </label>
+            <label for="inp_dpoy8" class="radio-label">8
+        <input type="radio" name="inp_dpoy" id="inp_dpoy8" value="8">
+      </label>
+            <label for="inp_dpoy9" class="radio-label">9
+        <input type="radio" name="inp_dpoy" id="inp_dpoy9" value="9">
+      </label>
+            <label for="inp_dpoy10" class="radio-label">10
+        <input type="radio" name="inp_dpoy" id="inp_dpoy10" value="10">
+      </label>
+        </div><br>
+
+        <h5>
+          <p style="font-size:25px">&#128099;</p>Rookie of the Year (ROTY):</h5>
+      <div class="radioGroupBelow">
+          <label for="inp_roty1" class="radio-label">1
+      <input type="radio" name="inp_roty" id="inp_roty1" value="1" required>
+    </label>
+          <label for="inp_roty2" class="radio-label">2
+      <input type="radio" name="inp_roty" id="inp_roty2" value="2">
+    </label>
+          <label for="inp_roty3" class="radio-label">3
+      <input type="radio" name="inp_roty" id="inp_roty3" value="3">
+    </label>
+          <label for="inp_roty4" class="radio-label">4
+      <input type="radio" name="inp_roty" id="inp_roty4" value="4">
+    </label>
+          <label for="inp_roty5" class="radio-label">5
+      <input type="radio" name="inp_roty" id="inp_roty5" value="5">
+    </label>
+          <label for="inp_roty6" class="radio-label">6
+      <input type="radio" name="inp_roty" id="inp_roty6" value="6">
+    </label>
+          <label for="inp_roty7" class="radio-label">7
+      <input type="radio" name="inp_roty" id="inp_roty7" value="7">
+    </label>
+          <label for="inp_roty8" class="radio-label">8
+      <input type="radio" name="inp_roty" id="inp_roty8" value="8">
+    </label>
+          <label for="inp_roty9" class="radio-label">9
+      <input type="radio" name="inp_roty" id="inp_roty9" value="9">
+    </label>
+          <label for="inp_roty10" class="radio-label">10
+      <input type="radio" name="inp_roty" id="inp_roty10" value="10">
+    </label>
+      </div><br>
+
+      <h5>
+        <p style="font-size:25px">[&#x36;]</p>Sixth Man of the Year (6MOY):</h5>
+    <div class="radioGroupBelow">
+        <label for="inp_smoy1" class="radio-label">1
+    <input type="radio" name="inp_smoy" id="inp_smoy1" value="1" required>
+  </label>
+        <label for="inp_smoy2" class="radio-label">2
+    <input type="radio" name="inp_smoy" id="inp_smoy2" value="2">
+  </label>
+        <label for="inp_smoy3" class="radio-label">3
+    <input type="radio" name="inp_smoy" id="inp_smoy3" value="3">
+  </label>
+        <label for="inp_smoy4" class="radio-label">4
+    <input type="radio" name="inp_smoy" id="inp_smoy4" value="4">
+  </label>
+        <label for="inp_smoy5" class="radio-label">5
+    <input type="radio" name="inp_smoy" id="inp_smoy5" value="5">
+  </label>
+        <label for="inp_smoy6" class="radio-label">6
+    <input type="radio" name="inp_smoy" id="inp_smoy6" value="6">
+  </label>
+        <label for="inp_smoy7" class="radio-label">7
+    <input type="radio" name="inp_smoy" id="inp_smoy7" value="7">
+  </label>
+        <label for="inp_smoy8" class="radio-label">8
+    <input type="radio" name="inp_smoy" id="inp_smoy8" value="8">
+  </label>
+        <label for="inp_smoy9" class="radio-label">9
+    <input type="radio" name="inp_smoy" id="inp_smoy9" value="9">
+  </label>
+        <label for="inp_smoy10" class="radio-label">10
+    <input type="radio" name="inp_smoy" id="inp_smoy10" value="10">
+  </label>
+    </div><br>
+
+    <h5>
+      <p style="font-size:25px">&#128200;</p>Most Improved Player (MIP):</h5>
+  <div class="radioGroupBelow">
+      <label for="inp_mip1" class="radio-label">1
+  <input type="radio" name="inp_mip" id="inp_mip1" value="1" required>
+</label>
+      <label for="inp_mip2" class="radio-label">2
+  <input type="radio" name="inp_mip" id="inp_mip2" value="2">
+</label>
+      <label for="inp_mip3" class="radio-label">3
+  <input type="radio" name="inp_mip" id="inp_mip3" value="3">
+</label>
+      <label for="inp_mip4" class="radio-label">4
+  <input type="radio" name="inp_mip" id="inp_mip4" value="4">
+</label>
+      <label for="inp_mip5" class="radio-label">5
+  <input type="radio" name="inp_mip" id="inp_mip5" value="5">
+</label>
+      <label for="inp_mip6" class="radio-label">6
+  <input type="radio" name="inp_mip" id="inp_mip6" value="6">
+</label>
+      <label for="inp_mip7" class="radio-label">7
+  <input type="radio" name="inp_mip" id="inp_mip7" value="7">
+</label>
+      <label for="inp_mip8" class="radio-label">8
+  <input type="radio" name="inp_mip" id="inp_mip8" value="8">
+</label>
+      <label for="inp_mip9" class="radio-label">9
+  <input type="radio" name="inp_mip" id="inp_mip9" value="9">
+</label>
+      <label for="inp_mip10" class="radio-label">10
+  <input type="radio" name="inp_mip" id="inp_mip10" value="10">
+</label>
+  </div><br>
+
+            <h5>
                 <p style="font-size:25px">&#129351;</p>All-NBA First (1st) Teams:</h5>
             <div class="radioGroupBelow">
                 <label for="inp_1T1" class="radio-label">1
@@ -946,6 +1440,146 @@
           </label>
             </div><br>
 
+            <h5>
+              <p style="font-size:25px">&#128274;&#129351;</p>NBA All-Defensive First (1st) Teams:</h5>
+          <div class="radioGroupBelow">
+              <label for="inp_1DT1" class="radio-label">1
+          <input type="radio" name="inp_1DT" id="inp_1DT1" value="1" required>
+        </label>
+              <label for="inp_1DT2" class="radio-label">2
+          <input type="radio" name="inp_1DT" id="inp_1DT2" value="2">
+        </label>
+              <label for="inp_1DT3" class="radio-label">3
+          <input type="radio" name="inp_1DT" id="inp_1DT3" value="3">
+        </label>
+              <label for="inp_1DT4" class="radio-label">4
+          <input type="radio" name="inp_1DT" id="inp_1DT4" value="4">
+        </label>
+              <label for="inp_1DT5" class="radio-label">5
+          <input type="radio" name="inp_1DT" id="inp_1DT5" value="5">
+        </label>
+              <label for="inp_1DT6" class="radio-label">6
+          <input type="radio" name="inp_1DT" id="inp_1DT6" value="6">
+        </label>
+              <label for="inp_1DT7" class="radio-label">7
+          <input type="radio" name="inp_1DT" id="inp_1DT7" value="7">
+        </label>
+              <label for="inp_1DT8" class="radio-label">8
+          <input type="radio" name="inp_1DT" id="inp_1DT8" value="8">
+        </label>
+              <label for="inp_1DT9" class="radio-label">9
+          <input type="radio" name="inp_1DT" id="inp_1DT9" value="9">
+        </label>
+              <label for="inp_1DT10" class="radio-label">10
+          <input type="radio" name="inp_1DT" id="inp_1DT10" value="10">
+        </label>
+          </div><br>
+
+          <h5>
+            <p style="font-size:25px">&#128274;&#129352;</p>NBA All-Defensive Second (2nd) Teams:</h5>
+        <div class="radioGroupBelow">
+            <label for="inp_2DT1" class="radio-label">1
+        <input type="radio" name="inp_2DT" id="inp_2DT1" value="1" required>
+      </label>
+            <label for="inp_2DT2" class="radio-label">2
+        <input type="radio" name="inp_2DT" id="inp_2DT2" value="2">
+      </label>
+            <label for="inp_2DT3" class="radio-label">3
+        <input type="radio" name="inp_2DT" id="inp_2DT3" value="3">
+      </label>
+            <label for="inp_2DT4" class="radio-label">4
+        <input type="radio" name="inp_2DT" id="inp_2DT4" value="4">
+      </label>
+            <label for="inp_2DT5" class="radio-label">5
+        <input type="radio" name="inp_2DT" id="inp_2DT5" value="5">
+      </label>
+            <label for="inp_2DT6" class="radio-label">6
+        <input type="radio" name="inp_2DT" id="inp_2DT6" value="6">
+      </label>
+            <label for="inp_2DT7" class="radio-label">7
+        <input type="radio" name="inp_2DT" id="inp_2DT7" value="7">
+      </label>
+            <label for="inp_2DT8" class="radio-label">8
+        <input type="radio" name="inp_2DT" id="inp_2DT8" value="8">
+      </label>
+            <label for="inp_2DT9" class="radio-label">9
+        <input type="radio" name="inp_2DT" id="inp_2DT9" value="9">
+      </label>
+            <label for="inp_2DT10" class="radio-label">10
+        <input type="radio" name="inp_2DT" id="inp_2DT10" value="10">
+      </label>
+        </div><br>
+
+        <h5>
+          <p style="font-size:25px">&#129370;&#129351;</p>NBA All-Rookie First (1st) Teams:</h5>
+      <div class="radioGroupBelow">
+          <label for="inp_1RT1" class="radio-label">1
+      <input type="radio" name="inp_1RT" id="inp_1RT1" value="1" required>
+    </label>
+          <label for="inp_1RT2" class="radio-label">2
+      <input type="radio" name="inp_1RT" id="inp_1RT2" value="2">
+    </label>
+          <label for="inp_1RT3" class="radio-label">3
+      <input type="radio" name="inp_1RT" id="inp_1RT3" value="3">
+    </label>
+          <label for="inp_1RT4" class="radio-label">4
+      <input type="radio" name="inp_1RT" id="inp_1RT4" value="4">
+    </label>
+          <label for="inp_1RT5" class="radio-label">5
+      <input type="radio" name="inp_1RT" id="inp_1RT5" value="5">
+    </label>
+          <label for="inp_1RT6" class="radio-label">6
+      <input type="radio" name="inp_1RT" id="inp_1RT6" value="6">
+    </label>
+          <label for="inp_1RT7" class="radio-label">7
+      <input type="radio" name="inp_1RT" id="inp_1RT7" value="7">
+    </label>
+          <label for="inp_1RT8" class="radio-label">8
+      <input type="radio" name="inp_1RT" id="inp_1RT8" value="8">
+    </label>
+          <label for="inp_1RT9" class="radio-label">9
+      <input type="radio" name="inp_1RT" id="inp_1RT9" value="9">
+    </label>
+          <label for="inp_1RT10" class="radio-label">10
+      <input type="radio" name="inp_1RT" id="inp_1RT10" value="10">
+    </label>
+      </div><br>
+
+      <h5>
+        <p style="font-size:25px">&#129370;&#129352;</p>NBA All-Rookie Second (2nd) Teams:</h5>
+    <div class="radioGroupBelow">
+        <label for="inp_2RT1" class="radio-label">1
+    <input type="radio" name="inp_2RT" id="inp_2RT1" value="1" required>
+  </label>
+        <label for="inp_2RT2" class="radio-label">2
+    <input type="radio" name="inp_2RT" id="inp_2RT2" value="2">
+  </label>
+        <label for="inp_2RT3" class="radio-label">3
+    <input type="radio" name="inp_2RT" id="inp_2RT3" value="3">
+  </label>
+        <label for="inp_2RT4" class="radio-label">4
+    <input type="radio" name="inp_2RT" id="inp_2RT4" value="4">
+  </label>
+        <label for="inp_2RT5" class="radio-label">5
+    <input type="radio" name="inp_2RT" id="inp_2RT5" value="5">
+  </label>
+        <label for="inp_2RT6" class="radio-label">6
+    <input type="radio" name="inp_2RT" id="inp_2RT6" value="6">
+  </label>
+        <label for="inp_2RT7" class="radio-label">7
+    <input type="radio" name="inp_2RT" id="inp_2RT7" value="7">
+  </label>
+        <label for="inp_2RT8" class="radio-label">8
+    <input type="radio" name="inp_2RT" id="inp_2RT8" value="8">
+  </label>
+        <label for="inp_2RT9" class="radio-label">9
+    <input type="radio" name="inp_2RT" id="inp_2RT9" value="9">
+  </label>
+        <label for="inp_2RT10" class="radio-label">10
+    <input type="radio" name="inp_2RT" id="inp_2RT10" value="10">
+  </label>
+    </div><br>
+
             <h3>Miscellaneous (M-Score)</h3>
             <div class="left-align-text">
                 On a scale of 1 to 5, rate the importance of a player's longevity and durability.
@@ -1017,6 +1651,164 @@
             <option value="4">4</option>
             <option value="5">5</option>
             </select>
+
+            <h3>Era/Decade (E-Score)</h3>
+            <div class="left-align-text">
+                On a scale of 1 to 5, rate which NBA decades are/were the most competitive/impactful. Players that played during these decades will receive points towards their E-Score and overall GOAT-Score based on your input.
+            </div>
+            <br>
+            <h6>1950s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor501" class="radio-label">1
+            <input type="radio" name="factor50" id="factor501" value="1" required>
+          </label>
+                <label for="factor502" class="radio-label">2
+            <input type="radio" name="factor50" id="factor502" value="2">
+          </label>
+                <label for="factor503" class="radio-label">3
+            <input type="radio" name="factor50" id="factor503" value="3">
+          </label>
+                <label for="factor504" class="radio-label">4
+            <input type="radio" name="factor50" id="factor504" value="4">
+          </label>
+                <label for="factor505" class="radio-label">5
+            <input type="radio" name="factor50" id="factor505" value="5">
+          </label>
+            </div>
+            <br>
+            <h6>1960s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor601" class="radio-label">1
+            <input type="radio" name="factor60" id="factor601" value="1" required>
+          </label>
+                <label for="factor602" class="radio-label">2
+            <input type="radio" name="factor60" id="factor602" value="2">
+          </label>
+                <label for="factor603" class="radio-label">3
+            <input type="radio" name="factor60" id="factor603" value="3">
+          </label>
+                <label for="factor604" class="radio-label">4
+            <input type="radio" name="factor60" id="factor604" value="4">
+          </label>
+                <label for="factor605" class="radio-label">5
+            <input type="radio" name="factor60" id="factor605" value="5">
+          </label>
+            </div>
+            <br>
+            <h6>1970s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor701" class="radio-label">1
+            <input type="radio" name="factor70" id="factor701" value="1" required>
+          </label>
+                <label for="factor702" class="radio-label">2
+            <input type="radio" name="factor70" id="factor702" value="2">
+          </label>
+                <label for="factor703" class="radio-label">3
+            <input type="radio" name="factor70" id="factor703" value="3">
+          </label>
+                <label for="factor704" class="radio-label">4
+            <input type="radio" name="factor70" id="factor704" value="4">
+          </label>
+                <label for="factor705" class="radio-label">5
+            <input type="radio" name="factor70" id="factor705" value="5">
+          </label>
+            </div>
+            <br>
+            <h6>1980s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor801" class="radio-label">1
+            <input type="radio" name="factor80" id="factor801" value="1" required>
+          </label>
+                <label for="factor802" class="radio-label">2
+            <input type="radio" name="factor80" id="factor802" value="2">
+          </label>
+                <label for="factor803" class="radio-label">3
+            <input type="radio" name="factor80" id="factor803" value="3">
+          </label>
+                <label for="factor804" class="radio-label">4
+            <input type="radio" name="factor80" id="factor804" value="4">
+          </label>
+                <label for="factor805" class="radio-label">5
+            <input type="radio" name="factor80" id="factor805" value="5">
+          </label>
+            </div>
+            <br>
+            <h6>1990s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor901" class="radio-label">1
+            <input type="radio" name="factor90" id="factor901" value="1" required>
+          </label>
+                <label for="factor902" class="radio-label">2
+            <input type="radio" name="factor90" id="factor902" value="2">
+          </label>
+                <label for="factor903" class="radio-label">3
+            <input type="radio" name="factor90" id="factor903" value="3">
+          </label>
+                <label for="factor904" class="radio-label">4
+            <input type="radio" name="factor90" id="factor904" value="4">
+          </label>
+                <label for="factor905" class="radio-label">5
+            <input type="radio" name="factor90" id="factor905" value="5">
+          </label>
+            </div>
+            <br>
+            <h6>2000s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor001" class="radio-label">1
+            <input type="radio" name="factor00" id="factor001" value="1" required>
+          </label>
+                <label for="factor002" class="radio-label">2
+            <input type="radio" name="factor00" id="factor002" value="2">
+          </label>
+                <label for="factor003" class="radio-label">3
+            <input type="radio" name="factor00" id="factor003" value="3">
+          </label>
+                <label for="factor004" class="radio-label">4
+            <input type="radio" name="factor00" id="factor004" value="4">
+          </label>
+                <label for="factor005" class="radio-label">5
+            <input type="radio" name="factor00" id="factor005" value="5">
+          </label>
+            </div>
+            <br>
+            <h6>2010s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor101" class="radio-label">1
+            <input type="radio" name="factor10" id="factor101" value="1" required>
+          </label>
+                <label for="factor102" class="radio-label">2
+            <input type="radio" name="factor10" id="factor102" value="2">
+          </label>
+                <label for="factor103" class="radio-label">3
+            <input type="radio" name="factor10" id="factor103" value="3">
+          </label>
+                <label for="factor104" class="radio-label">4
+            <input type="radio" name="factor10" id="factor104" value="4">
+          </label>
+                <label for="factor105" class="radio-label">5
+            <input type="radio" name="factor10" id="factor105" value="5">
+          </label>
+            </div>
+            <br>
+            <h6>2020s:</h6>
+            <div class="radioGroupBelow">
+                <label for="factor201" class="radio-label">1
+            <input type="radio" name="factor20" id="factor201" value="1" required>
+          </label>
+                <label for="factor202" class="radio-label">2
+            <input type="radio" name="factor20" id="factor202" value="2">
+          </label>
+                <label for="factor203" class="radio-label">3
+            <input type="radio" name="factor20" id="factor203" value="3">
+          </label>
+                <label for="factor204" class="radio-label">4
+            <input type="radio" name="factor20" id="factor204" value="4">
+          </label>
+                <label for="factor205" class="radio-label">5
+            <input type="radio" name="factor20" id="factor205" value="5">
+          </label>
+            </div>
+            <br>
             
             <br>
             <p><span class="highlight"><u>Mobile Devices:</u> </span>Be sure to select an answer for each metric! If the GO! button does not work, scroll up to make sure you've filled in an answer for everything!</p>
@@ -1049,6 +1841,27 @@
               }
             });
           </script>
+          
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const toggleSwitch = document.getElementById("toggleSwitch");
+                const resultElement = document.getElementById("result");
+            
+                // Set initial values
+                let valueWhenOn = "Y";
+                let valueWhenOff = "N";
+            
+                // Update values when the toggle is switched
+                toggleSwitch.addEventListener("change", function () {
+                    if (toggleSwitch.checked) {
+                        resultElement.textContent = valueWhenOn;
+                    } else {
+                        resultElement.textContent = valueWhenOff;
+                    }
+                });
+            });
+          </script>
+
           
 </body>
 

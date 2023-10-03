@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kenia">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Antonio">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bevan">
+    <link rel="icon" href="https://img.icons8.com/ultraviolet/40/basketball.png" type="image/png">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+    <title>NBA G.O.A.T. Results</title>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', sans-serif;
+            background-image: url('https://gcdnb.pbrd.co/images/6sxtGsH7uckC.png?o=1');
+        }
+        
+        h1 {
+            color: #f7f7f7;
+            font-size: 70px;
+            text-align: center;
+            line-height: 0.6;
+            font-family: 'Antonio', sans-serif;
+            text-shadow: -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+        }
+        h2 {
+            color: #1d1d1d;
+            font-size: 90px;
+            text-align: center;
+            font-family: 'Kenia', sans-serif;
+            line-height: 0.1;
+            text-shadow: -1px -1px 0 #f7f7f7,
+            1px -1px 0 #f7f7f7,
+            -1px 1px 0 #f7f7f7,
+            1px 1px 0 #f7f7f7;
+        }
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh; /* Makes the div full height of the viewport */
+        }
+        #capture {
+            font-size: 27px;
+            font-family: 'Bevan', sans-serif;
+            background-color: #060606; /* Button background color */
+            color: #fff; /* Text color */
+            border: 3px solid #f5f5f5;
+            padding: 6px 25px;
+            cursor: pointer;
+            border-radius: 15px; /* Rounded corners */
+        }
+
+        #capture:hover {
+            background-color: #0056b3; /* Hover color */
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f5f5f5;
+            border: px solid #ddd;
+            border-radius: 15px;
+        }
+        table tr:first-child {
+            background-color: #FFC300;
+        }
+        table tr:nth-child(2) {
+            background-color: #BDC3C7;
+        }
+        table tr:nth-child(3) {
+            background-color: #EB984E;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #333;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>NBA</h1><h2> G.O.A.T. </h2><h1>Results</h1>
+    <div class="center">
+        <!-- Add a button that triggers the screenshot -->
+        <button id="capture">Save List</button>
+    </div>
+    <!-- Display the table here -->
+    {{ table | safe }}
+
+    <br>
+
+    <script>
+        // Add a click event listener to the button
+        document.getElementById('capture').addEventListener('click', function () {
+            // Capture the webpage as an image
+            html2canvas(document.body).then(function (canvas) {
+                // Convert the canvas to a data URL
+                var imgData = canvas.toDataURL('image/png');
+
+                // Create a link element to download the image
+                var downloadLink = document.createElement('a');
+                downloadLink.href = imgData;
+                downloadLink.download = 'webpage-screenshot.png';
+                downloadLink.click();
+            });
+        });
+    </script>
+</body>
+</html>
