@@ -4,7 +4,9 @@ from nba_api.stats.endpoints import playercareerstats
 from nba_api.stats.static import players
 
 def get_career_stats(player_id):
-    # Fetch player career stats from NBA API
+    # Fetch player career stats from NBA API;
+    # Use mode "PerGame" to get player averages per game. Use index "1" to get single row that contains 
+    # averages for every season played by the selected player.
     career_stats = playercareerstats.PlayerCareerStats(player_id=player_id, per_mode36='PerGame').get_data_frames()[1]
 
     # Display player name
@@ -20,7 +22,7 @@ def get_player_name(player_id):
     return player_info['full_name']
 
 if __name__ == '__main__':
-    # Replace 'your_player_id' with the actual NBA player ID
+    #LeBron James
     player_id = 2544
     
     get_career_stats(player_id)
