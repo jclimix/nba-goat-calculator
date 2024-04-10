@@ -1,6 +1,6 @@
 # NBA GOAT Calculator
 
-Welcome to the NBA GOAT Calculator project! This Python web application is designed to help you determine the greatest basketball players of all time based on various metrics. Whether you're a die-hard NBA fan or just curious about basketball history, this tool is here to assist you in identifying the GOATs of the game.
+Welcome to the NBA GOAT Calculator project! This Python web application is designed to help basketball fans determine the greatest basketball players of all time based on various metrics. Whether you're a die-hard NBA fan or just curious about basketball history, this tool is here to assist you in identifying the GOATs of the game.
 
 ## How It Works
 
