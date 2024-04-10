@@ -156,11 +156,14 @@ def find_goat_web():
 
         inp_long = float(request.form['inp_long'])
         inp_dur = float(request.form['inp_dur'])
-        inp_ms_penalty = request.form['inp_ms_penalty']
+        inp_ms_penalty = (request.form['inp_ms_penalty'])
         inp_pen = float(request.form['inp_pen'])
+
+        inp_score_mode = request.form['inp_score_mode']
 
         #inp_era_mode = (request.form['inp_era_mode'])
 
+        '''
         factor50 = float(request.form['factor50'])
         factor60 = float(request.form['factor60'])
         factor70 = float(request.form['factor70'])
@@ -169,11 +172,14 @@ def find_goat_web():
         factor00 = float(request.form['factor00'])
         factor10 = float(request.form['factor10'])
         factor20 = float(request.form['factor20'])
+        '''
 
         #ERA-Mode DISABLED
         inp_era_mode = "N"
         inp_orpg = 0
         inp_drpg = 0
+
+        #inp_score_mode = "S"
 
         data = []
 
@@ -241,6 +247,8 @@ def find_goat_web():
         inp_long = float(inp_long)
         inp_dur = float(inp_dur)
 
+        '''
+
         factor50 = float(factor50)
         factor60 = float(factor60)
         factor70 = float(factor70)
@@ -249,6 +257,8 @@ def find_goat_web():
         factor00 = float(factor00)
         factor10 = float(factor10)
         factor20 = float(factor20)
+
+        '''
 
         inp_ppg *= 2
         inp_apg *= 2
@@ -380,10 +390,10 @@ def find_goat_web():
                 (p_ts[i] * 10 * inp_ts * inp_off_bst)) * inp_plyf_bst
 
                 #K-Score
-                k_score[i] = ((inp_rings * rings[i] * 1.5 * inp_chp_bst2) +
+                k_score[i] = (((inp_rings * rings[i] * 1.1 * inp_chp_bst2) +
                 (allstars[i] * inp_allstars * 1.5) +
                 (r_mvps[i] * inp_rmvp * 1.5) +
-                (f_mvps[i] * inp_fmvp * inp_chp_bst2 * 1.5) +
+                (f_mvps[i] * inp_fmvp * inp_chp_bst2 * 1.1) +
                 (nbat1[i] * inp_1T * 1.5) +
                 (nbat2[i] * inp_2T * 1.5) +
                 (nbat3[i] * inp_3T * 1.5) +
@@ -394,10 +404,10 @@ def find_goat_web():
                 (deft1[i] * inp_1DT * inp_def_bst * 1.5) +
                 (deft2[i] * inp_2DT * inp_def_bst * 1.5) +
                 (rookt1[i] * inp_1RT * 1.5) +
-                (rookt2[i] * inp_2RT * 1.5)) * inp_k_bst
+                (rookt2[i] * inp_2RT * 1.5)) *.8) * inp_k_bst
 
                 #M-Score
-                m_score[i] = (((years[i] * 2) * inp_long) + ((games[i] / 10) * inp_dur)) / 2
+                m_score[i] = ((((years[i] * 2) * inp_long) + ((games[i] / 10) * inp_dur)) / 2) * 1.1
 
                 #GOAT-Score
 
@@ -428,25 +438,68 @@ def find_goat_web():
 
         data = []
 
-        while i < (results + 1):
-            value, index = sorted_ovr[i- 1]
-            value2, index2 = sorted_goat[i- 1]
-            #print(f"{i}. Name: {player_name[index]} | G-Score: {round(value, 2)}.")
-            
-            rank = str(i)
-            name = str(player_name[index])
-            os = str(round(value, 2))
-            gs = str(round(value2, 2))
-            rs = str(round(r_score[index], 2))
-            ps = str(round(p_score[index], 2))
-            ms = str(round(m_score[index], 2))
-            ks = str(round(k_score[index], 2))
-            es = str(round(era_score[index], 2))
+        def normalize_scores(scores, max_range=99.9, min_range=90.0):
+            max_score = max(scores)
+            min_score = min(scores)
+            score_range = max_score - min_score
+            normalized_scores = []
 
-            row_data = {"Player\nRank": rank, "Player\nName": name, "NBA-2K\nOVR": os, "G-Score\n(G.O.A.T. Score)": gs, "R-Score\n(Regular Season)": rs, "P-Score\n(Playoffs)": ps, "K-Score\n(Awards)": ks, "M-Score\n(Misc.)": ms, "E-Score\n(Era Score)": es}
+            for score in scores:
+                normalized_score = round(((score - min_score) / (score_range + 1)) * (max_range - min_range) + min_range, 1)
+                normalized_scores.append(normalized_score)
 
-            data.append(row_data)
-            i += 1
+            return normalized_scores
+
+        # After calculating all scores for each player...
+        r_score_normalized = normalize_scores(r_score)
+        p_score_normalized = normalize_scores(p_score)
+        k_score_normalized = normalize_scores(k_score)
+        m_score_normalized = normalize_scores(m_score)
+        era_score_normalized = normalize_scores(era_score)
+
+        if inp_score_mode == "S":
+        # normalize ALL scores // SIMPLE SCORING MODE
+            while i < (results + 1):
+                value, index = sorted_ovr[i- 1]
+                value2, index2 = sorted_goat[i- 1]
+                #print(f"{i}. Name: {player_name[index]} | G-Score: {round(value, 2)}.")
+                
+                rank = str(i)
+                name = str(player_name[index])
+                os = str(round(value, 2))
+                gs = str(round(value2, 2))
+                rs = str(round(r_score_normalized[index], 2))
+                ps = str(round(p_score_normalized[index], 2))
+                ms = str(round(m_score_normalized[index], 2))
+                ks = str(round(k_score_normalized[index], 2))
+                #es = str(round(era_score[index], 2))
+
+                row_data = {"Player\nRank": rank, "Player\nName": name, "NBA-2K\nOVR": os, "G-Score\n(G.O.A.T. Score)": gs, "R-Score\n(Regular Season)": rs, "P-Score\n(Playoffs)": ps, "K-Score\n(Awards)": ks, "M-Score\n(Misc.)": ms}
+
+                data.append(row_data)
+                i += 1
+
+        if inp_score_mode == "A":
+            # print raw scores // ADVANCED SCORING MODE
+            while i < (results + 1):
+                value, index = sorted_ovr[i- 1]
+                value2, index2 = sorted_goat[i- 1]
+                #print(f"{i}. Name: {player_name[index]} | G-Score: {round(value, 2)}.")
+                
+                rank = str(i)
+                name = str(player_name[index])
+                os = str(round(value, 2))
+                gs = str(round(value2, 2))
+                rs = str(round(r_score[index], 2))
+                ps = str(round(p_score[index], 2))
+                ms = str(round(m_score[index], 2))
+                ks = str(round(k_score[index], 2))
+                #es = str(round(era_score[index], 2))
+
+                row_data = {"Player\nRank": rank, "Player\nName": name, "NBA-2K\nOVR": os, "G-Score\n(G.O.A.T. Score)": gs, "R-Score\n(Regular Season)": rs, "P-Score\n(Playoffs)": ps, "K-Score\n(Awards)": ks, "M-Score\n(Misc.)": ms}
+
+                data.append(row_data)
+                i += 1
 
         df = pd.DataFrame(data)
 
@@ -525,15 +578,17 @@ def find_goat_web():
             'Longevity': [inp_long],
             'Durability': [inp_dur],
             'M-Score Penalty?': [inp_ms_penalty],
-            'M-Score Penalty Value': [inp_pen],
-            '1950s': [factor50], 
-            '1960s': [factor60], 
-            '1970s': [factor70], 
-            '1980s': [factor80], 
-            '1990s': [factor90], 
-            '2000s': [factor00], 
-            '2010s': [factor10], 
-            '2020s': [factor20]
+            'M-Score Penalty Value': [inp_pen]
+            
+            #'1950s': [factor50], 
+            #'1960s': [factor60], 
+            #'1970s': [factor70], 
+            #'1980s': [factor80], 
+            #'1990s': [factor90], 
+            #'2000s': [factor00], 
+            #'2010s': [factor10], 
+            #'2020s': [factor20]
+            
         }
 
         # Create a DataFrame from the dictionary
