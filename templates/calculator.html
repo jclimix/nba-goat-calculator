@@ -29,7 +29,7 @@
             justify-content: center;
             align-items: center;
 
-            background-image: url('https://gcdnb.pbrd.co/images/6sxtGsH7uckC.png?o=1');
+            background-image: url('https://i.ibb.co/RbBy9bF/nba-legends.png');
 
             /* Set background properties */
             background-size: 110%;
@@ -1650,6 +1650,9 @@
             <br>
 
             <label for="inp_pen">M-Score Penalty:</label>
+            <p><span class="highlight">Meaning: </span>Selecting NO will reward players that have played <u>more</u> in the NBA. Selecting YES will reward players that have played <u>less</u> in the NBA while penalizing players with longer careers and more games played.</p>
+
+            <br><br>
             <select name="inp_pen" id="inp_pen" class="cool-dropdown">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -1659,10 +1662,21 @@
             <option value="5">5</option>
             </select>
 
+            <h3>Scoring Mode:</h3>
+            <select name="inp_score_mode" id="inp_score_mode" class="cool-dropdown">
+            <option value="S">Simple</option>
+            <option value="A">Advanced</option>
+            </select>
+            <br><br>
+            <p><span class="highlight"></span>Selecting 'Simple' will assign values on a scale of 0 to 99.9 for each category. Selecting 'Advanced' will show the raw scores for each category.</p>
+
+            
+            <!--
             <h3>Era/Decade (E-Score)</h3>
             <div class="left-align-text">
                 On a scale of 1 to 5, rate which NBA decades are/were the most competitive/impactful. Players that played during these decades will receive points towards their E-Score and overall GOAT-Score based on your input.
             </div>
+
             <br>
             <h6>1950s:</h6>
             <div class="radioGroupBelow">
@@ -1815,6 +1829,8 @@
             <input type="radio" name="factor20" id="factor205" value="5">
           </label>
             </div>
+          -->
+
             <br>
             
             <br>
