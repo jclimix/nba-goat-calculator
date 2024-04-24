@@ -1,41 +1,54 @@
+from app.calc import Calculator
+
 from flask import Flask, render_template, request
-from pprint import pprint
 import pandas as pd
 from tabulate import tabulate
 from waitress import serve
 
+
 app = Flask(__name__)
 
+test = "Y"
 
-class Player:
-    def __init__(self, data) -> None:
-        self.data = data
-
-
-class Calculator:
-    def __init__(self) -> None:
-        pass
-
-    def read_csv_as_dataframe(self, csv_file_path) -> pd.DataFrame:
-        try:
-            df = pd.read_csv(csv_file_path)
-            return df
-        except FileNotFoundError:
-            print(f"Error: File '{csv_file_path}' not found.")
-            return None
-        except Exception as e:
-            print(f"An error occurred while reading the CSV file '{
-                  csv_file_path}': {e}")
-            return None
-
-    def create_players_from_dataframe(self, dataframe):
-        players = []
-        for _, row in dataframe.iterrows():
-            player_data = row.to_dict()
-            player = Player(player_data)
-            players.append(player)
-        return players
-
+test_cases = {
+    'inp_ppg': '7',
+    'inp_apg': '5',
+    'inp_rpg': '9',
+    'inp_spg': '3',
+    'inp_bpg': '2',
+    'inp_3fg': '8',
+    'inp_fg': '8',
+    'inp_efg': '7',
+    'inp_ts': '9',
+    'inp_reg_wl': '6',
+    'inp_ply_wl': '5',
+    'inp_off_bst': '7',
+    'inp_def_bst': '6',
+    'inp_plyf_bst': '8',
+    'inp_chp_bst': 'Y',
+    'inp_rings': '5',
+    'inp_allstars': '8',
+    'inp_rmvp': '4',
+    'inp_fmvp': '3',
+    'inp_allstarmvp': '6',
+    'inp_dpoy': '7',
+    'inp_roty': '5',
+    'inp_smoy': '4',
+    'inp_mip': '5',
+    'inp_1T': '6',
+    'inp_2T': '5',
+    'inp_3T': '4',
+    'inp_1DT': '7',
+    'inp_2DT': '6',
+    'inp_1RT': '5',
+    'inp_2RT': '4',
+    'inp_k_bst': '8',
+    'inp_long': '7',
+    'inp_dur': '6',
+    'inp_ms_penalty': 'Y',
+    'inp_pen': '3',
+    'inp_score_mode': 'S'
+}
 
 calc = Calculator()
 
@@ -43,6 +56,53 @@ calc = Calculator()
 @app.route('/', methods=['GET', 'POST'])
 def find_goat_web():
     if request.method == 'POST':
+
+        if test == "Y":
+
+            form_data = test_cases
+
+            inp_points_pergame = float(form_data['inp_ppg'])
+            inp_assists_pergame = float(form_data['inp_apg'])
+            inp_rebounds_pergame = float(form_data['inp_rpg'])
+            inp_steals_pergame = float(form_data['inp_spg'])
+            inp_blocks_pergame = float(form_data['inp_bpg'])
+            inp_three_pt_fieldgoal_pct = float(form_data['inp_3fg'])
+            inp_fieldgoal_pct = float(form_data['inp_fg'])
+            inp_effective_fieldgoal_pct = float(form_data['inp_efg'])
+            inp_true_shooting_pct = float(form_data['inp_ts'])
+            inp_regular_szn_win_pct = float(form_data['inp_reg_wl'])
+            inp_playoffs_win_pct = float(form_data['inp_ply_wl'])
+
+            inp_offensive_boost = float(form_data['inp_off_bst'])
+            inp_defensive_boost = float(form_data['inp_def_bst'])
+            inp_playoffs_boost = float(form_data['inp_plyf_bst'])
+            inp_championship_boost_YN = form_data['inp_chp_bst']
+
+            inp_championships = float(form_data['inp_rings'])
+            inp_allstar_selections = float(form_data['inp_allstars'])
+            inp_regular_szn_mvps = float(form_data['inp_rmvp'])
+            inp_finals_mvps = float(form_data['inp_fmvp'])
+            inp_allstar_mvps = float(form_data['inp_allstarmvp'])
+            inp_defensivePlayerOfTheYear = float(form_data['inp_dpoy'])
+            inp_rookieOfTheYear = float(form_data['inp_roty'])
+            inp_sixthManOfTheYear = float(form_data['inp_smoy'])
+            inp_mostImprovedPlayer = float(form_data['inp_mip'])
+            inp_all_NBA_1stTeam = float(form_data['inp_1T'])
+            inp_all_NBA_2ndTeam = float(form_data['inp_2T'])
+            inp_all_NBA_3rdTeam = float(form_data['inp_3T'])
+            inp_all_NBA_defensive_1stTeam = float(form_data['inp_1DT'])
+            inp_all_NBA_defensive_2ndTeam = float(form_data['inp_2DT'])
+            inp_all_NBA_rookie_1stTeam = float(form_data['inp_1RT'])
+            inp_all_NBA_rookie_2ndTeam = float(form_data['inp_2RT'])
+
+            inp_kudos_score_boost = float(form_data['inp_k_bst'])
+
+            inp_longevity = float(form_data['inp_long'])
+            inp_durability = float(form_data['inp_dur'])
+            inp_mScore_penalty_YN = form_data['inp_ms_penalty']
+            inp_mScore_penalty = float(form_data['inp_pen'])
+
+            inp_score_mode = form_data['inp_score_mode']
 
         csv_file_path = "jmg_nba_dataset_prod.csv"
         dataframe: pd.DataFrame = calc.read_csv_as_dataframe(csv_file_path)
@@ -122,6 +182,50 @@ def find_goat_web():
         goat_score = [0] * player_count
 
         # Get user input from the form
+        inp_points_pergame = float(request.form['inp_ppg'])
+        inp_assists_pergame = float(request.form['inp_apg'])
+        inp_rebounds_pergame = float(request.form['inp_rpg'])
+        inp_steals_pergame = float(request.form['inp_spg'])
+        inp_blocks_pergame = float(request.form['inp_bpg'])
+        inp_three_pt_fieldgoal_pct = float(request.form['inp_3fg'])
+        inp_fieldgoal_pct = float(request.form['inp_fg'])
+        inp_effective_fieldgoal_pct = float(request.form['inp_efg'])
+        inp_true_shooting_pct = float(request.form['inp_ts'])
+        inp_regular_szn_win_pct = float(request.form['inp_reg_wl'])
+        inp_playoffs_win_pct = float(request.form['inp_ply_wl'])
+
+        inp_offensive_boost = float(request.form['inp_off_bst'])
+        inp_defensive_boost = float(request.form['inp_def_bst'])
+        inp_playoffs_boost = float(request.form['inp_plyf_bst'])
+        inp_championship_boost_YN = request.form['inp_chp_bst']
+
+        inp_championships = float(request.form['inp_rings'])
+        inp_allstar_selections = float(request.form['inp_allstars'])
+        inp_regular_szn_mvps = float(request.form['inp_rmvp'])
+        inp_finals_mvps = float(request.form['inp_fmvp'])
+        inp_allstar_mvps = float(request.form['inp_allstarmvp'])
+        inp_defensivePlayerOfTheYear = float(request.form['inp_dpoy'])
+        inp_rookieOfTheYear = float(request.form['inp_roty'])
+        inp_sixthManOfTheYear = float(request.form['inp_smoy'])
+        inp_mostImprovedPlayer = float(request.form['inp_mip'])
+        inp_all_NBA_1stTeam = float(request.form['inp_1T'])
+        inp_all_NBA_2ndTeam = float(request.form['inp_2T'])
+        inp_all_NBA_3rdTeam = float(request.form['inp_3T'])
+        inp_all_NBA_defensive_1stTeam = float(request.form['inp_1DT'])
+        inp_all_NBA_defensive_2ndTeam = float(request.form['inp_2DT'])
+        inp_all_NBA_rookie_1stTeam = float(request.form['inp_1RT'])
+        inp_all_NBA_rookie_2ndTeam = float(request.form['inp_2RT'])
+
+        inp_kudos_score_boost = float(request.form['inp_k_bst'])
+
+        inp_longevity = float(request.form['inp_long'])
+        inp_durability = float(request.form['inp_dur'])
+        inp_mScore_penalty_YN = (request.form['inp_ms_penalty'])
+        inp_mScore_penalty = float(request.form['inp_pen'])
+
+        inp_score_mode = request.form['inp_score_mode']
+
+        # inp_score_mode = "S"
         inp_points_pergame = float(request.form['inp_ppg'])
         inp_assists_pergame = float(request.form['inp_apg'])
         inp_rebounds_pergame = float(request.form['inp_rpg'])
