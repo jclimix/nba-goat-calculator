@@ -2,19 +2,21 @@ from flask import Flask, render_template, request
 from pprint import pprint
 import pandas as pd
 from tabulate import tabulate
-from waitress import serve 
+from waitress import serve
 
 app = Flask(__name__)
+
 
 class Player:
     def __init__(self, data) -> None:
         self.data = data
 
+
 class Calculator:
     def __init__(self) -> None:
         pass
 
-    def read_csv_as_dataframe(self, csv_file_path):
+    def read_csv_as_dataframe(self, csv_file_path) -> pd.DataFrame:
         try:
             df = pd.read_csv(csv_file_path)
             return df
@@ -22,9 +24,10 @@ class Calculator:
             print(f"Error: File '{csv_file_path}' not found.")
             return None
         except Exception as e:
-            print(f"An error occurred while reading the CSV file '{csv_file_path}': {e}")
+            print(f"An error occurred while reading the CSV file '{
+                  csv_file_path}': {e}")
             return None
-        
+
     def create_players_from_dataframe(self, dataframe):
         players = []
         for _, row in dataframe.iterrows():
@@ -33,21 +36,23 @@ class Calculator:
             players.append(player)
         return players
 
+
 calc = Calculator()
 
-@app.route('/', methods=['GET', 'POST'])
 
+@app.route('/', methods=['GET', 'POST'])
 def find_goat_web():
     if request.method == 'POST':
 
-        player_count = 4815
-
         csv_file_path = "jmg_nba_dataset_prod.csv"
-        dataframe = calc.read_csv_as_dataframe(csv_file_path)
+        dataframe: pd.DataFrame = calc.read_csv_as_dataframe(csv_file_path)
 
         players = calc.create_players_from_dataframe(dataframe)
 
-        player_count = len(dataframe) - 1
+        if players is not None:
+            player_count = len(dataframe.index)
+        else:
+            player_count = 0
 
         if dataframe is None:
             print("Nothing here...")
@@ -97,19 +102,19 @@ def find_goat_web():
         season_history = dataframe['SEASONS_PLAYED']
 
         # Convert columns to float
-        columns_to_convert = ['R_PPG', 'R_APG', 'R_RPG', 'R_OFF_REB', 'R_DEF_REB', 'R_SPG', 'R_BPG', 
-                    'R_FG', 'R_3FG', 'R_eFG', 'R_TS', 'P_PPG', 'P_APG', 'P_RPG', 'P_OFF_REB', 
-                    'P_DEF_REB', 'P_SPG', 'P_BPG', 'P_FG', 'P_3FG', 'P_eFG', 'P_TS', 'REG_GW', 
-                    'REG_WL', 'PLY_GW', 'PLY_WL', 'TOT_GW', 'TOT_GP', 'TOT_WL', 'RINGS', 
-                    'ALLSTARS', 'R-MVPS', 'F-MVPS', 'NBAT1', 'NBAT2', 'NBAT3', 'ALLSTARMVPS', 
-                    'DPOYS', 'ROTYS', 'SMOYS', 'MIPS', 'DEFT1', 'DEFT2', 'ROOKT1', 'ROOKT2', 
-                    'GAMES', 'YEARS']
-        
+        columns_to_convert = ['R_PPG', 'R_APG', 'R_RPG', 'R_OFF_REB', 'R_DEF_REB', 'R_SPG', 'R_BPG',
+                              'R_FG', 'R_3FG', 'R_eFG', 'R_TS', 'P_PPG', 'P_APG', 'P_RPG', 'P_OFF_REB',
+                              'P_DEF_REB', 'P_SPG', 'P_BPG', 'P_FG', 'P_3FG', 'P_eFG', 'P_TS', 'REG_GW',
+                              'REG_WL', 'PLY_GW', 'PLY_WL', 'TOT_GW', 'TOT_GP', 'TOT_WL', 'RINGS',
+                              'ALLSTARS', 'R-MVPS', 'F-MVPS', 'NBAT1', 'NBAT2', 'NBAT3', 'ALLSTARMVPS',
+                              'DPOYS', 'ROTYS', 'SMOYS', 'MIPS', 'DEFT1', 'DEFT2', 'ROOKT1', 'ROOKT2',
+                              'GAMES', 'YEARS']
+
         # Convert each column to float
         for col in columns_to_convert:
             dataframe[col] = dataframe[col].astype(float)
 
-        #aggregated arrays
+        # aggregated arrays
         reg_szn_score = [0] * player_count
         playoffs_score = [0] * player_count
         kudos_score = [0] * player_count
@@ -158,14 +163,11 @@ def find_goat_web():
         inp_mScore_penalty_YN = (request.form['inp_ms_penalty'])
         inp_mScore_penalty = float(request.form['inp_pen'])
 
-
         inp_score_mode = request.form['inp_score_mode']
 
-        #inp_score_mode = "S"
+        # inp_score_mode = "S"
 
         data = []
-
-        player_count = 4815
 
         def normalize_scores(scores):
 
@@ -181,7 +183,8 @@ def find_goat_web():
 
             # Divide each score by the highest score, multiply by 100, round to the nearest tenth, and append it to the normalized_scores list
             for score in scores:
-                normalized_score = round(((score - min_score) / score_range) * (99.9 - 90.0) + 90.0, 1)
+                normalized_score = round(
+                    ((score - min_score) / score_range) * (99.9 - 90.0) + 90.0, 1)
                 normalized_scores.append(normalized_score)
 
             return normalized_scores
@@ -256,7 +259,6 @@ def find_goat_web():
         inp_longevity *= 2
         inp_durability *= 2
 
-
         inp_championship_boost = 0.0
 
         if inp_championship_boost_YN == "Y":
@@ -266,76 +268,81 @@ def find_goat_web():
 
         era_score = [0] * player_count
 
-        #perform calculations
-        i = 0
+        # perform calculations
 
         for i in range(player_count):
-                
-                #R-Score
-                reg_szn_score[i] = ((reg_szn_points_pergame[i] * 1 * inp_points_pergame * inp_offensive_boost) + 
-                (reg_szn_assists_pergame[i] * 1.75 * inp_assists_pergame * inp_offensive_boost) +
-                (reg_szn_rebounds_pergame[i] * 1.85 * inp_rebounds_pergame * ((inp_offensive_boost + inp_defensive_boost)/2)) +
-                (regular_szn_win_pct[i] * 10 * inp_regular_szn_win_pct) +
-                (reg_szn_steals_pergame[i] * 2.5 * inp_steals_pergame * inp_defensive_boost) +
-                (reg_szn_blocks_pergame[i] * 1.75 * inp_blocks_pergame * inp_defensive_boost) +
-                (reg_szn_three_pt_fieldgoal_pct[i] * 10 * inp_three_pt_fieldgoal_pct * inp_offensive_boost) +
-                (reg_szn_fieldgoal_pct[i] * 10 * inp_fieldgoal_pct * inp_offensive_boost) +
-                (reg_szn_effective_fieldgoal_pct[i] * 10 * inp_effective_fieldgoal_pct * inp_offensive_boost) +
-                (reg_szn_true_shooting_pct[i] * 10 * inp_true_shooting_pct * inp_offensive_boost))
 
-                #P-Score
-                playoffs_score[i] = ((playoffs_points_pergame[i] * 1 * inp_points_pergame * inp_offensive_boost) + 
-                (playoffs_assists_pergame[i] * 1.75 * inp_assists_pergame * inp_offensive_boost) +
-                (playoffs_rebounds_pergame[i] * 1.85 * inp_rebounds_pergame * ((inp_offensive_boost + inp_defensive_boost)/2)) +
-                (playoffs_win_pct[i] * 10 * inp_playoffs_win_pct) +
-                (playoffs_steals_pergame[i] * 2.5 * inp_steals_pergame * inp_defensive_boost) +
-                (playoffs_blocks_pergame[i] * 1.75 * inp_blocks_pergame * inp_defensive_boost) +
-                (playoffs_three_pt_fieldgoal_pct[i] * 10 * inp_three_pt_fieldgoal_pct * inp_offensive_boost) +
-                (playoffs_fieldgoal_pct[i] * 10 * inp_fieldgoal_pct * inp_offensive_boost) +
-                (playoffs_effective_fieldgoal_pct[i] * 10 * inp_effective_fieldgoal_pct * inp_offensive_boost) +
-                (playoffs_true_shooting_pct[i] * 10 * inp_true_shooting_pct * inp_offensive_boost)) * inp_playoffs_boost
+            # R-Score
+            print(f"{i=}")
+            reg_szn_score[i] = ((reg_szn_points_pergame[i] * 1 * inp_points_pergame * inp_offensive_boost) +
+                                (reg_szn_assists_pergame[i] * 1.75 * inp_assists_pergame * inp_offensive_boost) +
+                                (reg_szn_rebounds_pergame[i] * 1.85 * inp_rebounds_pergame * ((inp_offensive_boost + inp_defensive_boost)/2)) +
+                                (regular_szn_win_pct[i] * 10 * inp_regular_szn_win_pct) +
+                                (reg_szn_steals_pergame[i] * 2.5 * inp_steals_pergame * inp_defensive_boost) +
+                                (reg_szn_blocks_pergame[i] * 1.75 * inp_blocks_pergame * inp_defensive_boost) +
+                                (reg_szn_three_pt_fieldgoal_pct[i] * 10 * inp_three_pt_fieldgoal_pct * inp_offensive_boost) +
+                                (reg_szn_fieldgoal_pct[i] * 10 * inp_fieldgoal_pct * inp_offensive_boost) +
+                                (reg_szn_effective_fieldgoal_pct[i] * 10 * inp_effective_fieldgoal_pct * inp_offensive_boost) +
+                                (reg_szn_true_shooting_pct[i] * 10 * inp_true_shooting_pct * inp_offensive_boost))
 
-                #K-Score
-                kudos_score[i] = (((inp_championships * rings[i] * 1.1 * inp_championship_boost) +
-                (allstars[i] * inp_allstar_selections * 1.5) +
-                (reg_szn_mvps[i] * inp_regular_szn_mvps * 1.5) +
-                (finals_mvps[i] * inp_finals_mvps * inp_championship_boost * 1.1) +
-                (all_NBA_1stTeam[i] * inp_all_NBA_1stTeam * 1.5) +
-                (all_NBA_2ndTeam[i] * inp_all_NBA_2ndTeam * 1.5) +
-                (all_NBA_3rdTeam[i] * inp_all_NBA_3rdTeam * 1.5) +
-                (defensivePlayerOfTheYear[i] * inp_defensivePlayerOfTheYear * inp_defensive_boost * 1.5) +
-                (rookieOfTheYears[i] * inp_rookieOfTheYear * 1.5) +
-                (sixthManOfTheYears[i] * inp_sixthManOfTheYear * 1.5) +
-                (allstar_mvps[i] * inp_allstar_mvps * 1.5) +
-                (all_NBA_defensive_1stTeam[i] * inp_all_NBA_defensive_1stTeam * inp_defensive_boost * 1.5) +
-                (all_NBA_defensive_2ndTeam[i] * inp_all_NBA_defensive_2ndTeam * inp_defensive_boost * 1.5) +
-                (all_NBA_rookie_1stTeam[i] * inp_all_NBA_rookie_1stTeam * 1.5) +
-                (all_NBA_rookie_2ndTeam[i] * inp_all_NBA_rookie_2ndTeam * 1.5)) *.8) * inp_kudos_score_boost
+            # P-Score
+            playoffs_score[i] = ((playoffs_points_pergame[i] * 1 * inp_points_pergame * inp_offensive_boost) +
+                                 (playoffs_assists_pergame[i] * 1.75 * inp_assists_pergame * inp_offensive_boost) +
+                                 (playoffs_rebounds_pergame[i] * 1.85 * inp_rebounds_pergame * ((inp_offensive_boost + inp_defensive_boost)/2)) +
+                                 (playoffs_win_pct[i] * 10 * inp_playoffs_win_pct) +
+                                 (playoffs_steals_pergame[i] * 2.5 * inp_steals_pergame * inp_defensive_boost) +
+                                 (playoffs_blocks_pergame[i] * 1.75 * inp_blocks_pergame * inp_defensive_boost) +
+                                 (playoffs_three_pt_fieldgoal_pct[i] * 10 * inp_three_pt_fieldgoal_pct * inp_offensive_boost) +
+                                 (playoffs_fieldgoal_pct[i] * 10 * inp_fieldgoal_pct * inp_offensive_boost) +
+                                 (playoffs_effective_fieldgoal_pct[i] * 10 * inp_effective_fieldgoal_pct * inp_offensive_boost) +
+                                 (playoffs_true_shooting_pct[i] * 10 * inp_true_shooting_pct * inp_offensive_boost)) * inp_playoffs_boost
 
-                #M-Score
-                misc_score[i] = ((((years[i] * 2) * inp_longevity) + ((games[i] / 10) * inp_durability)) / 2) * 1.1
+            # K-Score
+            kudos_score[i] = (((inp_championships * rings[i] * 1.1 * inp_championship_boost) +
+                               (allstars[i] * inp_allstar_selections * 1.5) +
+                               (reg_szn_mvps[i] * inp_regular_szn_mvps * 1.5) +
+                               (finals_mvps[i] * inp_finals_mvps * inp_championship_boost * 1.1) +
+                               (all_NBA_1stTeam[i] * inp_all_NBA_1stTeam * 1.5) +
+                               (all_NBA_2ndTeam[i] * inp_all_NBA_2ndTeam * 1.5) +
+                               (all_NBA_3rdTeam[i] * inp_all_NBA_3rdTeam * 1.5) +
+                               (defensivePlayerOfTheYear[i] * inp_defensivePlayerOfTheYear * inp_defensive_boost * 1.5) +
+                               (rookieOfTheYears[i] * inp_rookieOfTheYear * 1.5) +
+                               (sixthManOfTheYears[i] * inp_sixthManOfTheYear * 1.5) +
+                               (allstar_mvps[i] * inp_allstar_mvps * 1.5) +
+                               (all_NBA_defensive_1stTeam[i] * inp_all_NBA_defensive_1stTeam * inp_defensive_boost * 1.5) +
+                               (all_NBA_defensive_2ndTeam[i] * inp_all_NBA_defensive_2ndTeam * inp_defensive_boost * 1.5) +
+                               (all_NBA_rookie_1stTeam[i] * inp_all_NBA_rookie_1stTeam * 1.5) +
+                               (all_NBA_rookie_2ndTeam[i] * inp_all_NBA_rookie_2ndTeam * 1.5)) * .8) * inp_kudos_score_boost
 
-                #GOAT-Score
+            # M-Score
+            misc_score[i] = ((((years[i] * 2) * inp_longevity) +
+                             ((games[i] / 10) * inp_durability)) / 2) * 1.1
 
-                #Select GOAT-Score Function
-                if inp_mScore_penalty_YN == "Y":
-                
-                    goat_score[i] = (reg_szn_score[i] + playoffs_score[i] + kudos_score[i] + era_score[i]) - (misc_score[i] * float(inp_mScore_penalty))
+            # GOAT-Score
 
-                if inp_mScore_penalty_YN == "N":
+            # Select GOAT-Score Function
+            if inp_mScore_penalty_YN == "Y":
 
-                    goat_score[i] = (reg_szn_score[i] + playoffs_score[i] + kudos_score[i] + misc_score[i] + era_score[i])
+                goat_score[i] = (reg_szn_score[i] + playoffs_score[i] + kudos_score[i] +
+                                 era_score[i]) - (misc_score[i] * float(inp_mScore_penalty))
 
-                i = i + 1
+            if inp_mScore_penalty_YN == "N":
+
+                goat_score[i] = (reg_szn_score[i] + playoffs_score[i] +
+                                 kudos_score[i] + misc_score[i] + era_score[i])
+
+            i = i + 1
 
         overall_score = []
 
         overall_score = normalize_scores(goat_score)
 
-        indexed_ovr = [(value, index) for index, value in enumerate(overall_score)]
+        indexed_ovr = [(value, index)
+                       for index, value in enumerate(overall_score)]
         sorted_ovr = sorted(indexed_ovr, reverse=True)
 
-        indexed_goat = [(value, index) for index, value in enumerate(goat_score)]
+        indexed_goat = [(value, index)
+                        for index, value in enumerate(goat_score)]
         sorted_goat = sorted(indexed_goat, reverse=True)
 
         i = 1
@@ -351,7 +358,8 @@ def find_goat_web():
             normalized_scores = []
 
             for score in scores:
-                normalized_score = round(((score - min_score) / (score_range + 1)) * (max_range - min_range) + min_range, 1)
+                normalized_score = round(
+                    ((score - min_score) / (score_range + 1)) * (max_range - min_range) + min_range, 1)
                 normalized_scores.append(normalized_score)
 
             return normalized_scores
@@ -363,12 +371,12 @@ def find_goat_web():
         misc_score_normalized = normalize_scores(misc_score)
 
         if inp_score_mode == "S":
-        # normalize ALL scores // SIMPLE SCORING MODE
+            # normalize ALL scores // SIMPLE SCORING MODE
             while i < (results + 1):
-                value, index = sorted_ovr[i- 1]
-                value2, index2 = sorted_goat[i- 1]
-                #print(f"{i}. Name: {player_name[index]} | G-Score: {round(value, 2)}.")
-                
+                value, index = sorted_ovr[i - 1]
+                value2, index2 = sorted_goat[i - 1]
+                # print(f"{i}. Name: {player_name[index]} | G-Score: {round(value, 2)}.")
+
                 rank = str(i)
                 name = str(player_name[index])
                 os = str(round(value, 2))
@@ -378,7 +386,8 @@ def find_goat_web():
                 ms = str(round(misc_score_normalized[index], 2))
                 ks = str(round(kudos_score_normalized[index], 2))
 
-                row_data = {"Player\nRank": rank, "Player\nName": name, "NBA-2K\nOVR": os, "G-Score\n(G.O.A.T. Score)": gs, "R-Score\n(Regular Season)": rs, "P-Score\n(Playoffs)": ps, "K-Score\n(Awards)": ks, "M-Score\n(Misc.)": ms}
+                row_data = {"Player\nRank": rank, "Player\nName": name, "NBA-2K\nOVR": os,
+                            "G-Score\n(G.O.A.T. Score)": gs, "R-Score\n(Regular Season)": rs, "P-Score\n(Playoffs)": ps, "K-Score\n(Awards)": ks, "M-Score\n(Misc.)": ms}
 
                 data.append(row_data)
                 i += 1
@@ -386,10 +395,10 @@ def find_goat_web():
         if inp_score_mode == "A":
             # print raw scores // ADVANCED SCORING MODE
             while i < (results + 1):
-                value, index = sorted_ovr[i- 1]
-                value2, index2 = sorted_goat[i- 1]
-                #print(f"{i}. Name: {player_name[index]} | G-Score: {round(value, 2)}.")
-                
+                value, index = sorted_ovr[i - 1]
+                value2, index2 = sorted_goat[i - 1]
+                # print(f"{i}. Name: {player_name[index]} | G-Score: {round(value, 2)}.")
+
                 rank = str(i)
                 name = str(player_name[index])
                 os = str(round(value, 2))
@@ -399,17 +408,19 @@ def find_goat_web():
                 ms = str(round(misc_score[index], 2))
                 ks = str(round(kudos_score[index], 2))
 
-                row_data = {"Player\nRank": rank, "Player\nName": name, "NBA-2K\nOVR": os, "G-Score\n(G.O.A.T. Score)": gs, "R-Score\n(Regular Season)": rs, "P-Score\n(Playoffs)": ps, "K-Score\n(Awards)": ks, "M-Score\n(Misc.)": ms}
+                row_data = {"Player\nRank": rank, "Player\nName": name, "NBA-2K\nOVR": os,
+                            "G-Score\n(G.O.A.T. Score)": gs, "R-Score\n(Regular Season)": rs, "P-Score\n(Playoffs)": ps, "K-Score\n(Awards)": ks, "M-Score\n(Misc.)": ms}
 
                 data.append(row_data)
                 i += 1
 
         df = pd.DataFrame(data)
 
-        table_results = tabulate(df, headers="keys", tablefmt="html", showindex=False)
+        table_results = tabulate(
+            df, headers="keys", tablefmt="html", showindex=False)
 
         inp_points_pergame /= 2
-        inp_assists_pergame /= 2                                                                                                                                                                                    
+        inp_assists_pergame /= 2
         inp_rebounds_pergame /= 2
         inp_steals_pergame /= 2
         inp_blocks_pergame /= 2
@@ -439,7 +450,6 @@ def find_goat_web():
 
         inp_longevity /= 2
         inp_durability /= 2
-
 
         # Create a dictionary with variable names as keys and their values as values
         data_scorecard = {
@@ -476,7 +486,7 @@ def find_goat_web():
             'Longevity': [inp_longevity],
             'Durability': [inp_durability],
             'M-Score Penalty?': [inp_mScore_penalty_YN],
-            'M-Score Penalty Value': [inp_mScore_penalty]   
+            'M-Score Penalty Value': [inp_mScore_penalty]
         }
 
         # Create a DataFrame from the dictionary
@@ -485,11 +495,13 @@ def find_goat_web():
         transposed_df2 = df2.transpose()
 
         # Display the DataFrame as a table with borders
-        table_scorecard = tabulate(transposed_df2, headers='keys', tablefmt='html')
+        table_scorecard = tabulate(
+            transposed_df2, headers='keys', tablefmt='html')
 
         return render_template('table.html', table_results=table_results, table_scorecard=table_scorecard)
 
     return render_template('calculator.html')
+
 
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=8000)
