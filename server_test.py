@@ -4,30 +4,50 @@ import pandas as pd
 from tabulate import tabulate
 from waitress import serve 
 
-player_count = 4815
-
 app = Flask(__name__)
 
-def read_csv_as_dataframe(csv_file_path):
-    try:
-        df = pd.read_csv(csv_file_path)
-        return df
-    except FileNotFoundError:
-        print(f"Error: File '{csv_file_path}' not found.")
-        return None
-    except Exception as e:
-        print(f"An error occurred while reading the CSV file '{csv_file_path}': {e}")
-        return None
+class Player:
+    def __init__(self, data) -> None:
+        self.data = data
 
+class Calculator:
+    def __init__(self) -> None:
+        pass
 
-@app.route('/', methods=['GET', 'POST'])    
+    def read_csv_as_dataframe(self, csv_file_path):
+        try:
+            df = pd.read_csv(csv_file_path)
+            return df
+        except FileNotFoundError:
+            print(f"Error: File '{csv_file_path}' not found.")
+            return None
+        except Exception as e:
+            print(f"An error occurred while reading the CSV file '{csv_file_path}': {e}")
+            return None
+        
+    def create_players_from_dataframe(self, dataframe):
+        players = []
+        for _, row in dataframe.iterrows():
+            player_data = row.to_dict()
+            player = Player(player_data)
+            players.append(player)
+        return players
+
+calc = Calculator()
+
+@app.route('/', methods=['GET', 'POST'])
+
 def find_goat_web():
     if request.method == 'POST':
 
         player_count = 4815
 
         csv_file_path = "jmg_nba_dataset_prod.csv"
-        dataframe = read_csv_as_dataframe(csv_file_path)
+        dataframe = calc.read_csv_as_dataframe(csv_file_path)
+
+        players = calc.create_players_from_dataframe(dataframe)
+
+        player_count = len(dataframe) - 1
 
         if dataframe is None:
             print("Nothing here...")
