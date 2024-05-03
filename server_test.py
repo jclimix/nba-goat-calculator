@@ -24,8 +24,7 @@ class Calculator:
             print(f"Error: File '{csv_file_path}' not found.")
             return None
         except Exception as e:
-            print(f"An error occurred while reading the CSV file '{
-                  csv_file_path}': {e}")
+            print(f"An error occurred while reading the CSV file 'csv_file_path': {e}")
             return None
 
     def create_players_from_dataframe(self, dataframe):
@@ -58,7 +57,7 @@ def find_goat_web():
             print("Nothing here...")
 
         # Create variables for each column
-        idx = dataframe.INDEX
+        idx = dataframe['INDEX']
         player_id = dataframe['PLAYER_ID']
         player_name = dataframe['PLAYER_NAME']
         reg_szn_points_pergame = dataframe['R_PPG']
@@ -85,18 +84,18 @@ def find_goat_web():
         allstars = dataframe['ALLSTARS']
         reg_szn_mvps = dataframe['R-MVPS']
         finals_mvps = dataframe['F-MVPS']
-        all_NBA_1stTeam = dataframe['NBAT1']
-        all_NBA_2ndTeam = dataframe['NBAT2']
-        all_NBA_3rdTeam = dataframe['NBAT3']
+        all_nba_1st_team = dataframe['NBAT1']
+        all_nba_2nd_team = dataframe['NBAT2']
+        all_nba_3rd_team = dataframe['NBAT3']
         allstar_mvps = dataframe['ALLSTARMVPS']
-        defensivePlayerOfTheYear = dataframe['DPOYS']
-        rookieOfTheYears = dataframe['ROTYS']
-        sixthManOfTheYears = dataframe['SMOYS']
+        defensive_player_of_year = dataframe['DPOYS']
+        rookie_of_years = dataframe['ROTYS']
+        sixth_man_of_years = dataframe['SMOYS']
         mostImprovedPlayer = dataframe['MIPS']
-        all_NBA_defensive_1stTeam = dataframe['DEFT1']
-        all_NBA_defensive_2ndTeam = dataframe['DEFT2']
-        all_NBA_rookie_1stTeam = dataframe['ROOKT1']
-        all_NBA_rookie_2ndTeam = dataframe['ROOKT2']
+        all_nba_defensive_1st_team = dataframe['DEFT1']
+        all_nba_defensive_2nd_team = dataframe['DEFT2']
+        all_nba_rookie_1st_team = dataframe['ROOKT1']
+        all_nba_rookie_2nd_team = dataframe['ROOKT2']
         games = dataframe['GAMES']
         years = dataframe['YEARS']
         season_history = dataframe['SEASONS_PLAYED']
@@ -144,24 +143,24 @@ def find_goat_web():
         inp_regular_szn_mvps = float(request.form['inp_rmvp'])
         inp_finals_mvps = float(request.form['inp_fmvp'])
         inp_allstar_mvps = float(request.form['inp_allstarmvp'])
-        inp_defensivePlayerOfTheYear = float(request.form['inp_dpoy'])
-        inp_rookieOfTheYear = float(request.form['inp_roty'])
-        inp_sixthManOfTheYear = float(request.form['inp_smoy'])
-        inp_mostImprovedPlayer = float(request.form['inp_mip'])
-        inp_all_NBA_1stTeam = float(request.form['inp_1T'])
-        inp_all_NBA_2ndTeam = float(request.form['inp_2T'])
-        inp_all_NBA_3rdTeam = float(request.form['inp_3T'])
-        inp_all_NBA_defensive_1stTeam = float(request.form['inp_1DT'])
-        inp_all_NBA_defensive_2ndTeam = float(request.form['inp_2DT'])
-        inp_all_NBA_rookie_1stTeam = float(request.form['inp_1RT'])
-        inp_all_NBA_rookie_2ndTeam = float(request.form['inp_2RT'])
+        inp_defensive_player_of_year = float(request.form['inp_dpoy'])
+        inp_rookie_of_year = float(request.form['inp_roty'])
+        inp_sixth_man_of_year = float(request.form['inp_smoy'])
+        inp_most_improved_player = float(request.form['inp_mip'])
+        inp_all_nba_1st_team = float(request.form['inp_1T'])
+        inp_all_nba_2nd_team = float(request.form['inp_2T'])
+        inp_all_nba_3rd_team = float(request.form['inp_3T'])
+        inp_all_nba_defensive_1st_team = float(request.form['inp_1DT'])
+        inp_all_nba_defensive_2nd_team = float(request.form['inp_2DT'])
+        inp_all_nba_rookie_1st_team = float(request.form['inp_1RT'])
+        inp_all_nba_rookie_2nd_team = float(request.form['inp_2RT'])
 
         inp_kudos_score_boost = float(request.form['inp_k_bst'])
 
         inp_longevity = float(request.form['inp_long'])
         inp_durability = float(request.form['inp_dur'])
-        inp_mScore_penalty_YN = (request.form['inp_ms_penalty'])
-        inp_mScore_penalty = float(request.form['inp_pen'])
+        inp_m_score_penalty_yn = (request.form['inp_ms_penalty'])
+        inp_m_score_penalty = float(request.form['inp_pen'])
 
         inp_score_mode = request.form['inp_score_mode']
 
@@ -210,17 +209,17 @@ def find_goat_web():
         inp_regular_szn_mvps = float(inp_regular_szn_mvps)
         inp_finals_mvps = float(inp_finals_mvps)
         inp_allstar_mvps = float(inp_allstar_mvps)
-        inp_defensivePlayerOfTheYear = float(inp_defensivePlayerOfTheYear)
-        inp_rookieOfTheYear = float(inp_rookieOfTheYear)
-        inp_sixthManOfTheYear = float(inp_sixthManOfTheYear)
-        inp_mostImprovedPlayer = float(inp_mostImprovedPlayer)
-        inp_all_NBA_1stTeam = float(inp_all_NBA_1stTeam)
-        inp_all_NBA_2ndTeam = float(inp_all_NBA_2ndTeam)
-        inp_all_NBA_3rdTeam = float(inp_all_NBA_3rdTeam)
-        inp_all_NBA_defensive_1stTeam = float(inp_all_NBA_defensive_1stTeam)
-        inp_all_NBA_defensive_2ndTeam = float(inp_all_NBA_defensive_2ndTeam)
-        inp_all_NBA_rookie_1stTeam = float(inp_all_NBA_rookie_1stTeam)
-        inp_all_NBA_rookie_2ndTeam = float(inp_all_NBA_rookie_2ndTeam)
+        inp_defensive_player_of_year = float(inp_defensive_player_of_year)
+        inp_rookie_of_year = float(inp_rookie_of_year)
+        inp_sixth_man_of_year = float(inp_sixth_man_of_year)
+        inp_most_improved_player = float(inp_most_improved_player)
+        inp_all_nba_1st_team = float(inp_all_nba_1st_team)
+        inp_all_nba_2nd_team = float(inp_all_nba_2nd_team)
+        inp_all_nba_3rd_team = float(inp_all_nba_3rd_team)
+        inp_all_nba_defensive_1st_team = float(inp_all_nba_defensive_1st_team)
+        inp_all_nba_defensive_2nd_team = float(inp_all_nba_defensive_2nd_team)
+        inp_all_nba_rookie_1st_team = float(inp_all_nba_rookie_1st_team)
+        inp_all_nba_rookie_2nd_team = float(inp_all_nba_rookie_2nd_team)
 
         inp_kudos_score_boost = float(inp_kudos_score_boost)
 
@@ -244,17 +243,17 @@ def find_goat_web():
         inp_regular_szn_mvps *= 2
         inp_finals_mvps *= 2
         inp_allstar_mvps *= 2
-        inp_defensivePlayerOfTheYear *= 2
-        inp_rookieOfTheYear *= 2
-        inp_sixthManOfTheYear *= 2
-        inp_mostImprovedPlayer *= 2
-        inp_all_NBA_1stTeam *= 2
-        inp_all_NBA_2ndTeam *= 2
-        inp_all_NBA_3rdTeam *= 2
-        inp_all_NBA_defensive_1stTeam *= 2
-        inp_all_NBA_defensive_2ndTeam *= 2
-        inp_all_NBA_rookie_1stTeam *= 2
-        inp_all_NBA_rookie_2ndTeam *= 2
+        inp_defensive_player_of_year *= 2
+        inp_rookie_of_year *= 2
+        inp_sixth_man_of_year *= 2
+        inp_most_improved_player *= 2
+        inp_all_nba_1st_team *= 2
+        inp_all_nba_2nd_team *= 2
+        inp_all_nba_3rd_team *= 2
+        inp_all_nba_defensive_1st_team *= 2
+        inp_all_nba_defensive_2nd_team *= 2
+        inp_all_nba_rookie_1st_team *= 2
+        inp_all_nba_rookie_2nd_team *= 2
 
         inp_longevity *= 2
         inp_durability *= 2
@@ -302,17 +301,17 @@ def find_goat_web():
                                (allstars[i] * inp_allstar_selections * 1.5) +
                                (reg_szn_mvps[i] * inp_regular_szn_mvps * 1.5) +
                                (finals_mvps[i] * inp_finals_mvps * inp_championship_boost * 1.1) +
-                               (all_NBA_1stTeam[i] * inp_all_NBA_1stTeam * 1.5) +
-                               (all_NBA_2ndTeam[i] * inp_all_NBA_2ndTeam * 1.5) +
-                               (all_NBA_3rdTeam[i] * inp_all_NBA_3rdTeam * 1.5) +
-                               (defensivePlayerOfTheYear[i] * inp_defensivePlayerOfTheYear * inp_defensive_boost * 1.5) +
-                               (rookieOfTheYears[i] * inp_rookieOfTheYear * 1.5) +
-                               (sixthManOfTheYears[i] * inp_sixthManOfTheYear * 1.5) +
+                               (all_nba_1st_team[i] * inp_all_nba_1st_team * 1.5) +
+                               (all_nba_2nd_team[i] * inp_all_nba_2nd_team * 1.5) +
+                               (all_nba_3rd_team[i] * inp_all_nba_3rd_team * 1.5) +
+                               (defensive_player_of_year[i] * inp_defensive_player_of_year * inp_defensive_boost * 1.5) +
+                               (rookie_of_years[i] * inp_rookie_of_year * 1.5) +
+                               (sixth_man_of_years[i] * inp_sixth_man_of_year * 1.5) +
                                (allstar_mvps[i] * inp_allstar_mvps * 1.5) +
-                               (all_NBA_defensive_1stTeam[i] * inp_all_NBA_defensive_1stTeam * inp_defensive_boost * 1.5) +
-                               (all_NBA_defensive_2ndTeam[i] * inp_all_NBA_defensive_2ndTeam * inp_defensive_boost * 1.5) +
-                               (all_NBA_rookie_1stTeam[i] * inp_all_NBA_rookie_1stTeam * 1.5) +
-                               (all_NBA_rookie_2ndTeam[i] * inp_all_NBA_rookie_2ndTeam * 1.5)) * .8) * inp_kudos_score_boost
+                               (all_nba_defensive_1st_team[i] * inp_all_nba_defensive_1st_team * inp_defensive_boost * 1.5) +
+                               (all_nba_defensive_2nd_team[i] * inp_all_nba_defensive_2nd_team * inp_defensive_boost * 1.5) +
+                               (all_nba_rookie_1st_team[i] * inp_all_nba_rookie_1st_team * 1.5) +
+                               (all_nba_rookie_2nd_team[i] * inp_all_nba_rookie_2nd_team * 1.5)) * .8) * inp_kudos_score_boost
 
             # M-Score
             misc_score[i] = ((((years[i] * 2) * inp_longevity) +
@@ -321,12 +320,12 @@ def find_goat_web():
             # GOAT-Score
 
             # Select GOAT-Score Function
-            if inp_mScore_penalty_YN == "Y":
+            if inp_m_score_penalty_yn == "Y":
 
                 goat_score[i] = (reg_szn_score[i] + playoffs_score[i] + kudos_score[i] +
-                                 era_score[i]) - (misc_score[i] * float(inp_mScore_penalty))
+                                 era_score[i]) - (misc_score[i] * float(inp_m_score_penalty))
 
-            if inp_mScore_penalty_YN == "N":
+            if inp_m_score_penalty_yn == "N":
 
                 goat_score[i] = (reg_szn_score[i] + playoffs_score[i] +
                                  kudos_score[i] + misc_score[i] + era_score[i])
@@ -436,17 +435,17 @@ def find_goat_web():
         inp_regular_szn_mvps /= 2
         inp_finals_mvps /= 2
         inp_allstar_mvps /= 2
-        inp_defensivePlayerOfTheYear /= 2
-        inp_rookieOfTheYear /= 2
-        inp_sixthManOfTheYear /= 2
-        inp_mostImprovedPlayer /= 2
-        inp_all_NBA_1stTeam /= 2
-        inp_all_NBA_2ndTeam /= 2
-        inp_all_NBA_3rdTeam /= 2
-        inp_all_NBA_defensive_1stTeam /= 2
-        inp_all_NBA_defensive_2ndTeam /= 2
-        inp_all_NBA_rookie_1stTeam /= 2
-        inp_all_NBA_rookie_2ndTeam /= 2
+        inp_defensive_player_of_year /= 2
+        inp_rookie_of_year /= 2
+        inp_sixth_man_of_year /= 2
+        inp_most_improved_player /= 2
+        inp_all_nba_1st_team /= 2
+        inp_all_nba_2nd_team /= 2
+        inp_all_nba_3rd_team /= 2
+        inp_all_nba_defensive_1st_team /= 2
+        inp_all_nba_defensive_2nd_team /= 2
+        inp_all_nba_rookie_1st_team /= 2
+        inp_all_nba_rookie_2nd_team /= 2
 
         inp_longevity /= 2
         inp_durability /= 2
@@ -472,21 +471,21 @@ def find_goat_web():
             'RegularMVP': [inp_regular_szn_mvps],
             'FinalsMVP': [inp_finals_mvps],
             'AllStarMVP': [inp_allstar_mvps],
-            'DPOY': [inp_defensivePlayerOfTheYear],
-            'ROTY': [inp_rookieOfTheYear],
-            '6MOY': [inp_sixthManOfTheYear],
-            'MIP': [inp_mostImprovedPlayer],
-            'NBA_1st_Team': [inp_all_NBA_1stTeam],
-            'NBA_2nd_Team': [inp_all_NBA_2ndTeam],
-            'NBA_3rd_Team': [inp_all_NBA_3rdTeam],
-            '1st_Defense_Team': [inp_all_NBA_defensive_1stTeam],
-            '2nd_Defense_Team': [inp_all_NBA_defensive_2ndTeam],
-            '1st_Rookie_Team': [inp_all_NBA_rookie_1stTeam],
-            '2nd_Rookie_Team': [inp_all_NBA_rookie_2ndTeam],
+            'DPOY': [inp_defensive_player_of_year],
+            'ROTY': [inp_rookie_of_year],
+            '6MOY': [inp_sixth_man_of_year],
+            'MIP': [inp_most_improved_player],
+            'NBA_1st_Team': [inp_all_nba_1st_team],
+            'NBA_2nd_Team': [inp_all_nba_2nd_team],
+            'NBA_3rd_Team': [inp_all_nba_3rd_team],
+            '1st_Defense_Team': [inp_all_nba_defensive_1st_team],
+            '2nd_Defense_Team': [inp_all_nba_defensive_2nd_team],
+            '1st_Rookie_Team': [inp_all_nba_rookie_1st_team],
+            '2nd_Rookie_Team': [inp_all_nba_rookie_2nd_team],
             'Longevity': [inp_longevity],
             'Durability': [inp_durability],
-            'M-Score Penalty?': [inp_mScore_penalty_YN],
-            'M-Score Penalty Value': [inp_mScore_penalty]
+            'M-Score Penalty?': [inp_m_score_penalty_yn],
+            'M-Score Penalty Value': [inp_m_score_penalty]
         }
 
         # Create a DataFrame from the dictionary
